@@ -44,7 +44,7 @@ Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(it
         currentY1 = [];
         currentP = [];
         for (var i = 0 ; i < pqi_name.length ; i++){
-            if (patient_zipcode[index] === chosenZipcode) {
+            if (patient_zipcode[i] === chosenZipcode) {
                 currentP.push(pqi_name[i]);
                 currentY1.push(y1[i]);
             }
