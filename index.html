@@ -1,23 +1,24 @@
 <html>
     <head>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script type="text/javascript"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <h2 style="color:black">Health Data</h2>
-        <div id="work" style="color:red">loading data ...</div>
-        <div class="showcase__section" id="bubble">
-        <div class="spacer --small"></div>
-        <div id="bubbleplots">
-        <div class="bubbleplot" data-num="0">
-        <div class="plot" id="plotdiv"></div>
-        <div class="control-row">
-        Choose Zipcode:
-        <select id="countrydata"></select>
-        <script src='app2.js'></script>
-    </body>
+               <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+        <body>
+<div class="showcase__section" id="bubble">
+  <div class="spacer --small"></div>
+  <div id="bubbleplots">
+    <div class="bubbleplot" data-num="0">
+      <div class="plot" id="plotdiv"></div>
+      <div class="control-row">
+        Country: <select class="countrydata">
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+      
+<script src='app2.js'>
+        </script>
+        </body>
 </html>
 
 
