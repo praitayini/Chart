@@ -38,11 +38,11 @@ Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(it
   //  allYear = unpack(rows, 'year'),
     //allGdp = unpack(rows, 'gdpPercap'),
     
-    //currentCountry,
-    //currentGdp = [],
-    //currentYear = [];
+    //var currentCountry,
+    var currentY1 = [];
+    var currentY2 = [];
 
-  for (index = 0; index < patient_zipcode.length; index++ ){
+  for (index = 0; index < items.length; index++ ){
     if (listofZipcode.indexOf(patient_zipcode[index]) === -1 ){
       listofZipcode.push(patient_zipcode[index]);
     }
@@ -52,9 +52,8 @@ Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(it
     var patient_zipcode = [];
     for (index = 0 ; index < items.length ; index++){
       if ( patient_zipcode[index] === chosenZipcode ) {
-        pqi_name.push(items[index].pqi_name);
- 	   y1.push(items[index].observed_rate_per_100_000_people);
- 	   y2.push(items[index].expected_rate_per_100_000_people);
+        currentY1.push(y1[index]);
+        currentY2.push(y2[index]);
       } 
     }
   };
@@ -67,7 +66,7 @@ function setBarPlot(chosenZipcode) {
 
     var trace1 = {
       x: pqi_name,
-      y: y1,
+      y: currentY1,
       name: 'Observed Rate (per 100,000 people)',
       marker: {color: 'rgb(55, 83, 109)'},
       type: 'bar'
@@ -75,7 +74,7 @@ function setBarPlot(chosenZipcode) {
 
     var trace2 = {
       x: pqi_name,
-      y: y2,
+      y: currentY2,
       name: 'Expected Rate (per 100,000 people)',
       marker: {color: 'rgb(26, 118, 255)'},
       type: 'bar'
