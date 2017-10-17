@@ -32,9 +32,7 @@ Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(it
  	y2.push(items[index].expected_rate_per_100_000_people);
     patient_zipcode.push(items[index].patient_zipcode);
  }
-    function unpack(rows, key) {
-        return rows.map(function(row) { return row[key]; });
-    }
+    
 
 //var allCountryNames = unpack(rows, 'country'),
   //  allYear = unpack(rows, 'year'),
@@ -62,7 +60,7 @@ Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(it
   };
 
 // Default Country Data
-//setBubblePlot('Afghanistan');
+setBarPlot('10001');
   
 function setBarPlot(chosenZipcode) {
     getZipcode(chosenZipcode);  
