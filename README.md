@@ -1,1 +1,1 @@
-live at https://praitayini.github.io/firestore
+live at https://praitayini.github.io/chart
