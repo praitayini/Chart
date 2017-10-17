@@ -71,8 +71,8 @@ Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(it
 
         var layout = {
             title:'Line and Scatter Plot',
-            height: 400,
-            width: 480
+            height: 1000,
+            width: 1000
         };
 
         Plotly.newPlot('plotdiv', data, layout);
