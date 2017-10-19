@@ -82,11 +82,11 @@ function datas(obj,value){
       bargroupgap: 0.1
     };
 
-    Plotly.newPlot('myDiv', data, layout);
+   Plotly.newPlot('myDiv', data, layout);
    var wk = document.getElementById('work')
    wk.innerHTML='';
-    wk.innerHTML='Number of observartions = '+obj.length
-    wk.style.color='blue'
+   wk.innerHTML='Number of observartions = '+obj.length
+   wk.style.color='blue'
 
 }
 
