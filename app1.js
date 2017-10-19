@@ -2,7 +2,7 @@ var yourArray = [];
 
 $.ajax({
   'type':'post',
-  'url':'https://health.data.ny.gov/resource/5q8c-d6xq.json',
+  'url':'5q8c-d6xq.json',
   'data':'',
   success:function(obj){
      var count = Object.keys(obj).length;
