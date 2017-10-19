@@ -1,10 +1,7 @@
 var yourArray = [];
 
-$.ajax({
-  'type':'post',
-  'url':'5q8c-d6xq.json',
-  'data':'',
-  success:function(obj){
+jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  .then(function(obj){
      var count = Object.keys(obj).length;
          for (var i = 0; i < obj.length; i++) {
          // alert(obj[i].patient_zipcode);
@@ -14,9 +11,8 @@ $.ajax({
 
           datas(obj,'');
 
-  }  
+  }) 
 
-})
 
 
 function datas(obj,value){
@@ -110,11 +106,8 @@ function get_zipcode()
 {
    yourArray=[];
   var value =   jQuery("#zipcode option:selected").val();
-  $.ajax({
-  'type':'post',
-  'url':'5q8c-d6xq.json',
-  'data':'',
-  success:function(obj){
+  jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  .then(function(obj){
 jsonObj=[];
      var count = Object.keys(obj).length;
          for (var i = 0; i < obj.length; i++) {
@@ -140,9 +133,8 @@ jsonObj=[];
 
           datas(jsonObj,value);
 
-  }  
+  })
 
-})
 
 
 
