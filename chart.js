@@ -1,43 +1,5 @@
-var mathbiol={};
-mathbiol.uri = 'health.data.ny.gov';
-mathbiol.sodaRead= new soda.Consumer(mathbiol.uri);
-// get 
-mathbiol.get=function(q,yr){
-    if(!yr){
-    yr=Object.getOwnPropertyNames(mathbiol.dtSrc)
-    }
-    if(!Array.isArray(yr)){
-    yr=[yr]
-    }
-    // handle year provided as number
-    yr=yr.map(function(yi){
-        if(typeof(yi)=="number"){yi="url"+yi}
-        return yi
-    })
-}
-mathbiol.count=function(yrs,fun){
-    yrs = yrs || mathbiol.yrs
-    if(typeof(yrs)=="number"){yrs=[yrs]} // making sure it is an Array
-    var count={}
-    console.log('number of entries for years ',yrs)
-    yrs.forEach(function(yr){
-        $.getJSON(mathbiol.dtSrc['url'+yr]+'?$query=SELECT%20COUNT(*)')
-         .then(function(c){
-             c[0].COUNT=parseInt(c[0].COUNT)
-                 console.log(yr,c[0].COUNT)
-             count[yr]=c[0].COUNT
-             // have some fun if done
-             if(Object.getOwnPropertyNames(count).length==yrs.length){
-                 console.log('done:')
-                 fun = fun || function(){console.log(count)}
-                 fun()
-             }
-         })
-    })
-    return count
-    //https://health.data.ny.gov/resource/s8d9-z734.json?$query=SELECT%20COUNT(*)
-
-}
+var count=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
+console.log(count)
 
 var yourArray = [];
 
