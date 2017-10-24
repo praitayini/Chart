@@ -1,5 +1,5 @@
 var mathbiol={};
-mathbiol.uri = 'https://health.data.ny.gov/resource/5q8c-d6xq.json';
+mathbiol.uri = 'health.data.ny.gov';
 mathbiol.sodaRead= new soda.Consumer(mathbiol.uri);
 // get 
 mathbiol.get=function(q,yr){
