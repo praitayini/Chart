@@ -73,7 +73,7 @@ mathbiol.count=function(yrs,fun){
     //https://health.data.ny.gov/resource/s8d9-z734.json?$query=SELECT%20COUNT(*)
 
 }
-
+alert(count);
 
 
 var yourArray = [];
