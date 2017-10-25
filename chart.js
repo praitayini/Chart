@@ -73,7 +73,10 @@ mathbiol.count=function(yrs,fun){
     //https://health.data.ny.gov/resource/s8d9-z734.json?$query=SELECT%20COUNT(*)
 
 }
-alert(count);
+var wk = document.getElementById('work')
+   wk.innerHTML='';
+    wk.innerHTML='Number of observartions = '+ c.length
+    wk.style.color='blue'
 
 
 var yourArray = [];
