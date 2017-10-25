@@ -75,7 +75,7 @@ mathbiol.count=function(yrs,fun){
 }
 var wk = document.getElementById('work')
    wk.innerHTML='';
-    wk.innerHTML='Number of observartions = '+ c.length
+    wk.innerHTML='Number of observartions = '+ count
     wk.style.color='blue'
 
 
