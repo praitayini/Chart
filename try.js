@@ -3,7 +3,9 @@ console.log(count)
 //mathbiol=(function(){
 var mathbiol={}
 // root URI for https://health.data.ny.gov/resource/s8d9-z734.json etc 
-// mathbiol.uri = 'health.data.ny.gov'
+mathbiol.uri = 'health.data.ny.gov'
+mathbiol.sodaRead= new soda.Consumer(mathbiol.uri)
+
 // mathbiol.yrs = [2009,2010,2011,2012,2013,2014]
 
 /*mathbiol.res={}
@@ -31,7 +33,7 @@ mathbiol.dt.url2014="https://health.data.ny.gov/resource/pzzw-8zdv.json"
 
 // SODA readers
 
-//mathbiol.sodaRead= new soda.Consumer(mathbiol.uri)
+mathbiol.sodaRead= new soda.Consumer(mathbiol.uri)
 
 4
 
