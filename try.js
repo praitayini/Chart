@@ -1,15 +1,25 @@
-var count=[];
 var response=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
     .then(  function(x) {
         var count = parseInt(count.responseJSON[0]['count']);
+        var wk = document.getElementById('work')
+        wk.innerHTML='';
+        wk.innerHTML='Number of observartions = '+ count
+        wk.style.color='blue'
     });
 var wk = document.getElementById('work')
 wk.innerHTML='';
 wk.innerHTML='Number of observartions = '+ count
 wk.style.color='blue'
 //mathbiol=(function(){
+var p1=[];
+var p2=[];
+var index=[];    
+var p1= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000');
+var p2= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&offset=10000');
+var p3= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=20000&offset=10000');
+var p3= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=30000&offset=10000');
 
-jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&offset=10000')   
+  
 var mathbiol={}
 // root URI for https://health.data.ny.gov/resource/s8d9-z734.json etc 
 mathbiol.uri = 'health.data.ny.gov'
