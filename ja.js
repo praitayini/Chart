@@ -24,6 +24,7 @@ sparcs.urls={
     "2011":{url:"https://health.data.ny.gov/resource/n5y9-zanf"},
     "2012":{url:"https://health.data.ny.gov/resource/rv8x-4fm3"},
     "2013":{url:"https://health.data.ny.gov/resource/tdf6-7fpk"},
+    "2015":{url:"https://health.data.ny.gov/resource/tdf6-7fpk"},
     "2014":{url:"https://health.data.ny.gov/resource/pzzw-8zdv"}
 }
 sparcs.years=Object.getOwnPropertyNames(sparcs.urls)

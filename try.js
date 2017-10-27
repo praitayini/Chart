@@ -1,11 +1,17 @@
-var count=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
-console.log(count)
+var response=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
+var count = parseInt(count.responseJSON[0]['count']);
+var wk = document.getElementById('work')
+wk.innerHTML='';
+wk.innerHTML='Number of observartions = '+ count
+wk.style.color='blue'
 //mathbiol=(function(){
 var mathbiol={}
 // root URI for https://health.data.ny.gov/resource/s8d9-z734.json etc 
 mathbiol.uri = 'health.data.ny.gov'
 mathbiol.sodaRead= new soda.Consumer(mathbiol.uri)
 mathbiol.yrs = [2009,2010,2011,2012,2013,2014]
+
+
 
 /*mathbiol.res={}
 mathbiol.res[2009]="s8d9-z734"
@@ -78,6 +84,9 @@ var wk = document.getElementById('work')
    wk.innerHTML='';
     wk.innerHTML='Number of observartions = '+ count
     wk.style.color='blue'
+
+
+
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
   .then(function(obj) {
      var count = Object.keys(obj).length;
