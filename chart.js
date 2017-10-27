@@ -141,4 +141,30 @@ jsonObj=[];
 
 }
 
-
+var response=
+jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
+    .then(function(x) {
+        console.log(x)
+//debugger
+        var count = parseInt(x[0].count);
+        var wk = document.getElementById('work')
+        wk.innerHTML='';
+        wk.innerHTML='Number of observartions = '+ count
+        wk.style.color='blue'
+    });
+console.log('hello')
+//mathbiol=(function(){
+var getResultFromPromise = function(promise){
+    promise.then(function(x) {
+        console.log('loaded data')
+    });
+}
+var index=[];
+var current = 10000;
+var max = 190000;
+var increment = 10000;
+while(current <= max ) {
+    promise = jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset='+current);
+    getResultFromPromise(promise)
+    current += increment;
+} 
