@@ -26,6 +26,26 @@ while(current <= max ) {
     current += increment;
 } 
 
+
+var url='https://health.data.ny.gov/resource/5q8c-d6xq.json'
+getJSON=function(url){
+    return new getResultFromPromise(function(resolve, reject) {
+      // do a thing, possibly async, then…
+      localforage.getItem(url)
+        .then(function(x){
+            if(x){
+                resolve(x)
+            }else{
+                $.getJSON(url)
+                 .then(function(x){
+                  localforage.setItem(url,x)
+                  resolve(x)
+                })
+                 .fail(function(err){reject(err)})
+            }})
+    })
+}
+
 // var p1= 
 // var p2= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset=10000');
 // var p3= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=20000&$offset=10000');
