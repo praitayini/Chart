@@ -1,7 +1,7 @@
 var response=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
     .then(  function(x) {
         console.log(x)
-        var count = parseInt(x.responseJSON[0]['count']);
+        var count = parseInt(response.responseJSON[0]['count']);
         var wk = document.getElementById('work')
         wk.innerHTML='';
         wk.innerHTML='Number of observartions = '+ count
