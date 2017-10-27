@@ -7,10 +7,7 @@ var response=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?
         wk.innerHTML='Number of observartions = '+ count
         wk.style.color='blue'
     });
-var wk = document.getElementById('work')
-wk.innerHTML='';
-wk.innerHTML='Number of observartions = '+ count
-wk.style.color='blue'
+/*
 //mathbiol=(function(){
 var p1=[];
 var p2=[];
@@ -72,7 +69,7 @@ mathbiol.get=function(q,yr){
         return yi
     })
 }
-*/
+
 mathbiol.count=function(yrs,fun){
     yrs = yrs || mathbiol.yrs
     if(typeof(yrs)=="number"){yrs=[yrs]} // making sure it is an Array
@@ -144,7 +141,7 @@ jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
 }
 
 
-/*
+
 sparcs.getJSON=function(url,fun,err){
     localforage.getItem(url)
      .then(function(x){fun(x)})
@@ -157,7 +154,7 @@ sparcs.getJSON=function(url,fun,err){
           .fail(function(x){err(x)})
      })
 }
-*/
+
 
 sparcs.countCounty=function(){
     var pp =[] // promises
@@ -193,3 +190,4 @@ sparcs.countCounty=function(){
     //console.log(pp)
     return Promise.all(pp)
 }
+*/
