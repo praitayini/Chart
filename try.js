@@ -13,7 +13,7 @@ console.log('hello')
 //mathbiol=(function(){
 var getResultFromPromise = function(promise){
     promise.then(function(x) {
-        console.log(x)
+        console.log('loaded data')
     });
 }
 var index=[];
