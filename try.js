@@ -1,3 +1,4 @@
+var count=[];
 var response=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
     .then(  function(x) {
         var count = parseInt(count.responseJSON[0]['count']);
