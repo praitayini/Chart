@@ -8,7 +8,7 @@ var response=jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?
         wk.innerHTML='Number of observartions = '+ count
         wk.style.color='blue'
     });
-/*
+console.log('hello')
 //mathbiol=(function(){
 var p1=[];
 var p2=[];
@@ -33,8 +33,12 @@ var p17= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$lim
 var p18= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=170000&offset=10000');
 var p19= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=180000&offset=10000');
 var p20= jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=190000&offset=1000');
+
 promise.all[(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20)].then(function())
 localforage.keys().then(function(x){console.log(x)})
+
+
+
 var mathbiol={}
 // root URI for https://health.data.ny.gov/resource/s8d9-z734.json etc 
 mathbiol.uri = 'health.data.ny.gov'
