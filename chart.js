@@ -79,10 +79,10 @@ function datas(obj,value){
     };
 
     Plotly.newPlot('myDiv', data, layout);
-   var wk = document.getElementById('work')
+   /*var wk = document.getElementById('work')
    wk.innerHTML='';
    wk.innerHTML='Number of observartions = '+obj.length
-   wk.style.color='blue'
+   wk.style.color='blue'*/
 
 }
 
