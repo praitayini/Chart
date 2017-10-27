@@ -10,21 +10,23 @@ jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT
         wk.style.color='blue'
     });
 
-
+var xx=[]
 var getResultFromPromise = function(promise){
     promise.then(function(x) {
-        console.log('loaded data')
+        xx.push.promise
     });
 }
 var index=[];
 var current = 10000;
 var max = 190000;
 var increment = 10000;
+var promises = []
 while(current <= max ) {
     promise = jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset='+current);
     getResultFromPromise(promise)
     current += increment;
 } 
+
 
 
 var url='https://health.data.ny.gov/resource/5q8c-d6xq.json'

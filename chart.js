@@ -144,7 +144,7 @@ jsonObj=[];
 var response=
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
     .then(function(x) {
-        console.log(x)
+        //console.log(x)
 //debugger
         var count = parseInt(x[0].count);
         var wk = document.getElementById('work')
@@ -152,11 +152,11 @@ jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT
         wk.innerHTML='Number of observartions = '+ count
         wk.style.color='blue'
     });
-console.log('hello')
-//mathbiol=(function(){
+
+var xx=[]
 var getResultFromPromise = function(promise){
     promise.then(function(x) {
-        console.log('loaded data')
+    xx.push.promise    
     });
 }
 var index=[];
