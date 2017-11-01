@@ -1,4 +1,4 @@
-var yourArray = xx;
+var yourArray = [];
 
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
   .then(function(obj){
@@ -170,6 +170,20 @@ while(current <= max ) {
     getResultFromPromise(promise)
     current += increment;
 } 
+
+localforage.keys().then(function(x){console.log(x)})
+
+
+localforage.keys('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  .then.catch(function(){
+      $.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+      .then(function(x){
+        localforage.setItem('https://health.data.ny.gov/resource/5q8c-d6xq.json',x)
+        fun(x)
+      })
+      .fail(function(x){err(x)})
+    })
+      console.log(x)
 
 var url='https://health.data.ny.gov/resource/5q8c-d6xq.json'
 getJSON=function(url){
