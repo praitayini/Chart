@@ -171,9 +171,34 @@ while(current <= max ) {
     current += increment;
 } 
 
-localforage.keys().then(function(x){console.log(x)})
 
 
+//localforage.keys().then(function(x){console.log(x)})
+jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  .then(function(y){
+    return new Promise(function(resolve, reject) {
+      localforage.setItem('https://health.data.ny.gov/resource/5q8c-d6xq', y)
+         .then(function () {
+         return localforage.getItem('https://health.data.ny.gov/resource/5q8c-d6xq');})
+           .then(function (y) {
+             resolve(y)})// we got our value
+              .catch(function (err) {
+                reject(err);// we got an error
+           });
+     })
+})
+
+
+
+
+/*
+localforage.setItem('https://health.data.ny.gov/resource/5q8c-d6xq', x).then(function () {
+  return localforage.getItem('https://health.data.ny.gov/resource/5q8c-d6xq');
+}).then(function (x) {
+  resolve(value)// we got our value
+}).catch(function (err) {
+  reject(err);// we got an error
+});
 localforage.keys('https://health.data.ny.gov/resource/5q8c-d6xq.json')
   .then.catch(function(){
       $.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
@@ -202,4 +227,4 @@ getJSON=function(url){
                  .fail(function(err){reject(err)})
             }})
     })
-}
+} */
