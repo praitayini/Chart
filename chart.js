@@ -1,17 +1,17 @@
 var yourArray = [];
 
-jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
-  .then(function(obj){
-     var count = Object.keys(obj).length;
-         for (var i = 0; i < obj.length; i++) {
+//jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  //.then(function(obj){
+    // var count = Object.keys(obj).length;
+         for (var i = 0; i < countPromises; i++) {
          // alert(obj[i].patient_zipcode);
-           yourArray.push(obj[i].patient_zipcode);
+         for (var j =0; j< countArray; j++)
+           yourArray.push(xx[i].responseJSON[j].year);
         }
-        getDropDownList('zipcode','zipcode', $.unique(yourArray))
+        getDropDownList('year','year', $.unique(yourArray))
+        datas(xx,'');
 
-          datas(obj,'');
-
-  }) 
+  
 
 
 
@@ -22,7 +22,7 @@ function datas(obj,value){
  var y2  = [];
  for    (index = 0; index < obj.length; index++) {
     pqi_name.push(obj[index].pqi_name);
-    y1.push(obj[index].observed_rate_per_100_000_people);
+    y1.push(obj[index].observed_rate_per_100_000_people); //change
     y2.push(obj[index].expected_rate_per_100_000_people);
  }
     var trace1 = {
@@ -87,8 +87,8 @@ function datas(obj,value){
 }
 
 function getDropDownList(name, id, optionList) {
-    var combo = $("<select onchange='get_zipcode();'></select>").attr("id", id).attr("name", name);
-    combo.append("<option value='' >Please select zipcode</option>");
+    var combo = $("<select onchange='year();'></select>").attr("id", id).attr("name", name);
+    combo.append("<option value='' >Please select year</option>");
     $.each(optionList, function (i, el) {
         combo.append("<option value="+ el +" >" + el + "</option>");
     });
@@ -102,44 +102,40 @@ function getDropDownList(name, id, optionList) {
 
 
 
-function get_zipcode()
+function year()
 {
-   yourArray=[];
+  yourArray=[];
   var value =   jQuery("#zipcode option:selected").val();
-  jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
-  .then(function(obj){
-jsonObj=[];
-     var count = Object.keys(obj).length;
-         for (var i = 0; i < obj.length; i++) {
+  //jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  //.then(function(obj){
+  jsonObj=[];
+  var countPromises = xx.length;
+  var countArray = xx[0].responseJSON.length
+         for (var i = 0; i < countPromises; i++) {
          // alert(obj[i].patient_zipcode);
-         if(obj[i].patient_zipcode==value || value==''){
-           yourArray.push(obj);
-
+           for (var j = 0; i< countArray; i++) {
+             if(xx[i].responseJSON[j].year==value || value==''){
+            yourArray.push(xx);
             item = {}
-            item ["patient_zipcode"] = obj[i].patient_zipcode;
-            item ["observed_rate_per_100_000_people"] = obj[i].observed_rate_per_100_000_people;
-            item ["year"] = obj[i].year;
-            item ["pqi_number"] = obj[i].pqi_number;
-            item ["software_version"] = obj[i].software_version;
-            item ["expected_rate_per_100_000_people"] = obj[i].expected_rate_per_100_000_people; 
-            item ["pqi_name"] = obj[i].pqi_name;
+            item ["patient_zipcode"] = xx[i].responseJSON[j].patient_zipcode;
+            item ["observed_rate_per_100_000_people"] = xx[i].responseJSON[j].observed_rate_per_100_000_people;
+            item ["year"] = xx[i].responseJSON[j].year;
+            item ["pqi_number"] = xx[i].responseJSON[j].pqi_number;
+            item ["software_version"] = xx[i].responseJSON[j].software_version;
+            item ["expected_rate_per_100_000_people"] = xx[i].responseJSON[j].expected_rate_per_100_000_people; 
+            item ["pqi_name"] = xx[i].responseJSON[j].pqi_name;
 
              jsonObj.push(item);
          }
         }
-        
+       }
 
       //  getDropDownList('zipcode','zipcode', $.unique(yourArray))
 
           datas(jsonObj,value);
 
-  })
+  }
 
-
-
-
-
-}
 
 var response=
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
