@@ -104,6 +104,7 @@ function getDropDownList(name, id, optionList) {
 
 function year()
 {
+  var getElements = function(a){
   yourArray=[];
   var value =   jQuery("#zipcode option:selected").val();
   //jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
@@ -114,7 +115,7 @@ function year()
          for (var i = 0; i < countPromises; i++) {
          // alert(obj[i].patient_zipcode);
            for (var j = 0; i< countArray; i++) {
-             if(xx[i].responseJSON[j].year==value || value==''){
+             if(parseInt(xx[i].responseJSON[j].year)==value || value==''){
             yourArray.push(xx);
             item = {}
             item ["patient_zipcode"] = xx[i].responseJSON[j].patient_zipcode;
@@ -129,7 +130,7 @@ function year()
          }
         }
        }
-
+      }
       //  getDropDownList('zipcode','zipcode', $.unique(yourArray))
 
           datas(jsonObj,value);
@@ -164,6 +165,7 @@ var increment = 10000;
 while(current <= max ) {
     promise = jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset='+current);
     getResultFromPromise(promise)
+    getElement(xx)
     current += increment;
 } 
 
