@@ -1,76 +1,35 @@
-jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
-  .then(function(dt){
-    var avg=function(a){
-      return a.reduce(function(a,b){
-        return a+b
-        })/a.length
-    }
-    console.log('data loaded: ',dt)
-    var x=dt.map(function(xi){
-      return parseFloat(xi.expected_rate_per_100_000_people)
-    })
-    avg(x)
-    // data in x, ready for stats
-    //var wk = document.getElementById('work')
-    //wk.innerHTML='Number of observartions = '+x.length+'<br>Average value : '+avg(x)
-    //wk.style.color='blue'
-    
-    //debugger
-})
+var yourArray = [];
 
-Plotly.d3.json('https://health.data.ny.gov/resource/5q8c-d6xq.json', function(items){
+jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  .then(function(obj){
+     var count = Object.keys(obj).length;
+         for (var i = 0; i < obj.length; i++) {
+         // alert(obj[i].patient_zipcode);
+           yourArray.push(obj[i].patient_zipcode);
+        }
+        getDropDownList('zipcode','zipcode', $.unique(yourArray))
+
+          datas(obj,'');
+
+  })
+
+
+
+
+function datas(obj,value){
  var index;
  var pqi_name= [];
  var y1  = [];
  var y2  = [];
- var patient_zipcode= [];
- var listofZipcode = [];
-    
- for	(index = 0; index < items.length; index++) {
- 	pqi_name.push(items[index].pqi_name);
- 	y1.push(items[index].observed_rate_per_100_000_people);
- 	y2.push(items[index].expected_rate_per_100_000_people);
-    patient_zipcode.push(items[index].patient_zipcode);
+ for    (index = 0; index < obj.length; index++) {
+    pqi_name.push(obj[index].pqi_name);
+    y1.push(obj[index].observed_rate_per_100_000_people);
+    y2.push(obj[index].expected_rate_per_100_000_people);
  }
-    function unpack(rows, key) {
-        return rows.map(function(row) { return row[key]; });
-    }
-
-//var allCountryNames = unpack(rows, 'country'),
-  //  allYear = unpack(rows, 'year'),
-    //allGdp = unpack(rows, 'gdpPercap'),
-    
-    //currentCountry,
-    //currentGdp = [],
-    //currentYear = [];
-
-  for (index = 0; index < patient_zipcode.length; index++ ){
-    if (listofZipcode.indexOf(patient_zipcode[index]) === -1 ){
-      listofZipcode.push(patient_zipcode[index]);
-    }
-  }
-  
-  function getZipcode(chosenZipcode) {
-    var patient_zipcode = [];
-    for (index = 0 ; index < items.length ; index++){
-      if ( patient_zipcode[index] === chosenZipcode ) {
-        pqi_name.push(items[index].pqi_name);
- 	   y1.push(items[index].observed_rate_per_100_000_people);
- 	   y2.push(items[index].expected_rate_per_100_000_people);
-      } 
-    }
-  };
-
-// Default Country Data
-//setBubblePlot('Afghanistan');
-  
-function setBarPlot(chosenZipcode) {
-    getZipcode(chosenZipcode);  
-
     var trace1 = {
       x: pqi_name,
       y: y1,
-      name: 'Observed Rate (per 100,000 people)',
+      name: 'Observed Rate ',
       marker: {color: 'rgb(55, 83, 109)'},
       type: 'bar'
     };
@@ -78,39 +37,114 @@ function setBarPlot(chosenZipcode) {
     var trace2 = {
       x: pqi_name,
       y: y2,
-      name: 'Expected Rate (per 100,000 people)',
+      name: 'Expected Rate ',
       marker: {color: 'rgb(26, 118, 255)'},
       type: 'bar'
     };
 
     var data = [trace1, trace2];
-
+    if(value=='')
+    {
+      var text = 'Health data for all Zip code';
+    }else
+    {
+      var text = 'Health data for ' +value+' Zip code';
+    }
     var layout = {
-      title: 'Health data in 2015'};
 
-    Plotly.newPlot('plotdiv', data, layout);
-};
-  
-var innerContainer = document.querySelector('[data-num="0"'),
-    plotEl = innerContainer.querySelector('.plot'),
-    zipcodeSelector = innerContainer.querySelector('.patientzipcode');
+      title: text,
+      xaxis: {tickfont: {
+          size: 14,
+          color: 'rgb(107, 107, 107)'
+        }},
+      yaxis: {
+        title: '',
+        titlefont: {
+          size: 16,
+          color: 'rgb(107, 107, 107)'
+        },
+        tickfont: {
+          size: 14,
+          color: 'rgb(107, 107, 107)'
+        }
+      },
+      legend: {
+        x: 0,
+        y: 1.0,
+        bgcolor: 'rgba(255, 255, 255, 0)',
+        bordercolor: 'rgba(255, 255, 255, 0)'
+      },
+      barmode: 'group',
+      bargap: 0.15,
+      bargroupgap: 0.1
+    };
 
-function assignOptions(textArray, selector) {
-  for (var i = 0; i < textArray.length;  i++) {
-      var currentOption = document.createElement('option');
-      currentOption.text = textArray[i];
-      selector.appendChild(currentOption);
-  }
+    Plotly.newPlot('myDiv', data, layout);
+   //var wk = document.getElementById('work')
+   //wk.innerHTML='';
+    //wk.innerHTML='Number of observartions = '+obj.length
+    //wk.style.color='blue'
+
 }
 
-assignOptions(listofZipcode, zipcodeSelector);
+function getDropDownList(name, id, optionList) {
+    var combo = $("<select onchange='get_zipcode();'></select>").attr("id", id).attr("name", name);
+    combo.append("<option value='' >Please select zipcode</option>");
+    $.each(optionList, function (i, el) {
+        combo.append("<option value="+ el +" >" + el + "</option>");
+    });
 
-function updateZipcode(){
-    setBarPlot(zipcodeSelector.value);
+    //return combo;
+    // OR
+    $("#drop").append(combo);
 }
-  
-zipcodeSelector.addEventListener('change', updateZipcode, false);
-});
+
+
+
+
+
+function get_zipcode()
+{
+   yourArray=[];
+  var value =   jQuery("#zipcode option:selected").val();
+  jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+  .then(function(obj){
+jsonObj=[];
+     var count = Object.keys(obj).length;
+         for (var i = 0; i < obj.length; i++) {
+         // alert(obj[i].patient_zipcode);
+         if(obj[i].patient_zipcode==value || value==''){
+           yourArray.push(obj);
+
+            item = {}
+            item ["patient_zipcode"] = obj[i].patient_zipcode;
+            item ["observed_rate_per_100_000_people"] = obj[i].observed_rate_per_100_000_people;
+            item ["year"] = obj[i].year;
+            item ["pqi_number"] = obj[i].pqi_number;
+            item ["software_version"] = obj[i].software_version;
+            item ["expected_rate_per_100_000_people"] = obj[i].expected_rate_per_100_000_people; 
+            item ["pqi_name"] = obj[i].pqi_name;
+
+             jsonObj.push(item);
+         }
+        }
+        
+
+      //  getDropDownList('zipcode','zipcode', $.unique(yourArray))
+
+          datas(jsonObj,value);
+
+  }) 
+
+}
+
+
+
+
+
+
+
+
 
 
 var response=
