@@ -165,7 +165,7 @@ var increment = 10000;
 while(current <= max ) {
     promise = jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset='+current);
     getResultFromPromise(promise)
-    getElement(xx)
+    //getElement(xx)
     current += increment;
 } 
 
