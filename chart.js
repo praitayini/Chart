@@ -32,39 +32,53 @@ while(current <= max ) {
     current += increment;
 } 
 
-
-var grid = {};
-jQuery(function($) {
+  var grid = {}
   for(var i = 0; i < xx.length; i++){
-  for (var j = 0; j < xx[i].responseJSON.length; j++) {
-    year = xx[i].responseJSON[j].year;
-    zipcode = xx[i].responseJSON[j].patient_zipcode;
-    if( grid[year] )
+    for (var j = 0; j < xx[i].responseJSON.length; j++) {
+      year = xx[i].responseJSON[j].year;
+      zipcode = xx[i].responseJSON[j].patient_zipcode;
+      if( grid[year] )
       grid[year][zipcode] = 1
-    else
+      else
       grid[year] = { zipcode : 1 }
+      }
   }
-}
-yrs=Object.keys(grid)
-for(var i = 0; i < yrs.length; i++) {
-  zips = Object.keys( grid[yrs[i]] );
-  grid[yrs[i]] = zips;
-} 
+  yrs=Object.keys(grid)
+  for(var i = 0; i < yrs.length; i++) {
+    zips = Object.keys( grid[yrs[i]] );
+    grid[yrs[i]] = zips;
+    } 
+    console.log(grid)
 
-console.log(grid)
-});
 
 
 jQuery(function($) {
+  var grid = {}
+  for(var i = 0; i < xx.length; i++){
+    for (var j = 0; j < xx[i].responseJSON.length; j++) {
+      year = xx[i].responseJSON[j].year;
+      zipcode = xx[i].responseJSON[j].patient_zipcode;
+      if( grid[year] )
+      grid[year][zipcode] = 1
+      else
+      grid[year] = { zipcode : 1 }
+      }
+  }
+  yrs=Object.keys(grid)
+  for(var i = 0; i < yrs.length; i++) {
+    zips = Object.keys( grid[yrs[i]] );
+    grid[yrs[i]] = zips;
+    } 
+    console.log(grid)
     
     var $locations = $('#location');
     $('#year').change(function () {
-        var year = $(this).val().toString();
-        console.log(year);
-        console.log(grid);
-        lcns = grid[year] || [1,2,3];
-        var html = $.map(lcns, function(lcn){
-            return '<option value="' + lcn + '">' + lcn + '</option>'
+      var year = $(this).val().toString();
+      console.log(year);
+      console.log(grid);
+      lcns = grid[year] || [];
+      var html = $.map(lcns, function(lcn){
+        return '<option value="' + lcn + '">' + lcn + '</option>'
         }).join('');
         console.log(html)
         $locations.html(html)
@@ -72,19 +86,14 @@ jQuery(function($) {
 });
 
 
-/*
-localforage.setItem('health',xx)
-  .then(function(dt)
-    {//console.log(dt)
 
-    })
-
-localforage.getItem('health')
-  .then(function(photo) {
-    // Create a data URI or something to put the photo in an <img> tag or similar.
-    console.log(photo);
+// A full setItem() call with Promises.
+localforage.setItem('health', xx).then(function(xx) {
+  alert(xx + ' was set!');
+}, function(error) {
+  console.error(error);
 });
-*/
+
 /*
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
   .then(function(obj){
@@ -218,66 +227,6 @@ jsonObj=[];
 
   }) 
 
-}
-
-
-
-
-
-
-
-
-
-
-/*jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
-  .then(function(y){
-    return new Promise(function(resolve, reject) {
-      localforage.setItem('https://health.data.ny.gov/resource/5q8c-d6xq', y)
-         .then(function () {
-         return localforage.getItem('https://health.data.ny.gov/resource/5q8c-d6xq');})
-           .then(function (y) {
-             resolve(y)})// we got our value
-              .catch(function (err) {
-                reject(err);// we got an error
-           });
-     })
-})
-
-
-
-sparcs.countCounty=function(){
-    var pp =[] // promises
-    // get variables
-    pp.push(
-        sparcs.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=1')
-         .then(function(x){ // sampling one reccord from 2014
-            sparcs.vars=Object.getOwnPropertyNames(x[0])
-          })
-    )
-    sparcs.years.forEach(function(yr){
-        sparcs.urls[yr].county={}
-        var li = document.createElement('li')
-        sparcsYearsInfo.appendChild(li)
-        li.innerHTML='<b>'+yr+'</b>: <span style="color:orange">counting ...</span>'
-        li.id="liYear_"+yr
-        var url = sparcs.urls[yr].url
-        // https://dev.socrata.com/docs/queries/
-        // https://dev.socrata.com/docs/functions
-        pp.push(sparcs.getJSON(url+'?$select=hospital_county,%20count(*)&$group=hospital_county&$limit=10000')
-         .then(function(x){
-            sparcs.urls[yr].count=0
-            x.forEach(function(xi){
-                xi.hospital_county=xi.hospital_county||'NA'
-                sparcs.urls[yr].county[xi.hospital_county]={count:parseInt(xi.count)}
-                sparcs.urls[yr].count+=sparcs.urls[yr].county[xi.hospital_county].count
-                4
-
-            })
-            li.innerHTML='For <b style="color:blue">'+yr+'</b> found <b style="color:blue">'+sparcs.urls[yr].count.toLocaleString()+'</b> patient records in <b style="color:blue">'+Object.entries(sparcs.urls[yr].county).length+'</b> counties</span>'
-        }))
-    })
-    //console.log(pp)
-    return Promise.all(pp)
 }
 
 
