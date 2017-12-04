@@ -7,6 +7,8 @@
         <script type="text/javascript"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
+        <script src='chart.js'></script>
+
     </head>
     <body>
     
@@ -14,10 +16,27 @@
         <br>
           <div id="drop"></div>
           <br>
-        <div id="work" style="color:red">loading data ...</div>
-        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+          <label class="page1">Year</label>
+          <div class="tooltips" title="Please select the year that the customer will primarily be served from">
+    <select id="year" name="year" placeholder="Phantasyland">
+        <option></option>
+        <option>2009</option>
+        <option>2010</option>
+        <option>2011</option>
+        <option>2012</option>
+        <option>2013</option>
+        <option>2014</option>
+    </select>
+    </div>
+    <br />
+    <br />
+    <label class="page1">Location</label>
+    <div class="tooltips" title="Please select the city that the customer is primarily to be served from.">
+    <select id="location" name="location" placeholder="Anycity"></select>
+    </div>
+    <div id="work" style="color:red">loading data ...</div>
+    <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
         <!--<script src='try.js'></script> -->
-        <script src='chart.js'></script>
     </body>
 </html>
 

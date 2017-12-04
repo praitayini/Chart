@@ -1,5 +1,91 @@
-var yourArray = [];
 
+var response=
+jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
+    .then(function(x) {
+        //console.log(x)
+//debugger
+        var count = parseInt(x[0].count);
+        var wk = document.getElementById('work')
+        wk.innerHTML='';
+        wk.innerHTML='Number of observartions = '+ count
+        wk.style.color='blue'
+    });
+
+var xx=[]
+var getResultFromPromise = function(promise){
+    promise.then(function(x) {
+    console.log('loaded data') 
+    xx.push(promise) 
+    },function(error){
+      console.error('uh oh:',error);
+    });
+}
+console.log(xx);
+var index=[];
+var current = 10000;
+var max = 190000;
+var increment = 10000;
+while(current <= max ) {
+    promise = jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset='+current);
+    getResultFromPromise(promise)
+    //getElement(xx)
+    current += increment;
+} 
+
+
+var grid = {};
+jQuery(function($) {
+  for(var i = 0; i < xx.length; i++){
+  for (var j = 0; j < xx[i].responseJSON.length; j++) {
+    year = xx[i].responseJSON[j].year;
+    zipcode = xx[i].responseJSON[j].patient_zipcode;
+    if( grid[year] )
+      grid[year][zipcode] = 1
+    else
+      grid[year] = { zipcode : 1 }
+  }
+}
+yrs=Object.keys(grid)
+for(var i = 0; i < yrs.length; i++) {
+  zips = Object.keys( grid[yrs[i]] );
+  grid[yrs[i]] = zips;
+} 
+
+console.log(grid)
+});
+
+
+jQuery(function($) {
+    
+    var $locations = $('#location');
+    $('#year').change(function () {
+        var year = $(this).val().toString();
+        console.log(year);
+        console.log(grid);
+        lcns = grid[year] || [1,2,3];
+        var html = $.map(lcns, function(lcn){
+            return '<option value="' + lcn + '">' + lcn + '</option>'
+        }).join('');
+        console.log(html)
+        $locations.html(html)
+    });
+});
+
+
+/*
+localforage.setItem('health',xx)
+  .then(function(dt)
+    {//console.log(dt)
+
+    })
+
+localforage.getItem('health')
+  .then(function(photo) {
+    // Create a data URI or something to put the photo in an <img> tag or similar.
+    console.log(photo);
+});
+*/
+/*
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
   .then(function(obj){
      var count = Object.keys(obj).length;
@@ -12,10 +98,6 @@ jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
           datas(obj,'');
 
   })
-
-
-
-
 function datas(obj,value){
  var index;
  var pqi_name= [];
@@ -147,41 +229,7 @@ jsonObj=[];
 
 
 
-var response=
-jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
-    .then(function(x) {
-        //console.log(x)
-//debugger
-        var count = parseInt(x[0].count);
-        var wk = document.getElementById('work')
-        wk.innerHTML='';
-        wk.innerHTML='Number of observartions = '+ count
-        wk.style.color='blue'
-    });
-
-var xx=[]
-var getResultFromPromise = function(promise){
-    promise.then(function(x) {
-    console.log('loaded data') 
-    xx.push(promise) 
-    });
-}
-console.log(xx);
-var index=[];
-var current = 10000;
-var max = 190000;
-var increment = 10000;
-while(current <= max ) {
-    promise = jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=10000&$offset='+current);
-    getResultFromPromise(promise)
-    //getElement(xx)
-    current += increment;
-} 
-
-
-
-//localforage.keys().then(function(x){console.log(x)})
-jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
+/*jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
   .then(function(y){
     return new Promise(function(resolve, reject) {
       localforage.setItem('https://health.data.ny.gov/resource/5q8c-d6xq', y)
@@ -194,4 +242,61 @@ jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
            });
      })
 })
+
+
+
+sparcs.countCounty=function(){
+    var pp =[] // promises
+    // get variables
+    pp.push(
+        sparcs.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$limit=1')
+         .then(function(x){ // sampling one reccord from 2014
+            sparcs.vars=Object.getOwnPropertyNames(x[0])
+          })
+    )
+    sparcs.years.forEach(function(yr){
+        sparcs.urls[yr].county={}
+        var li = document.createElement('li')
+        sparcsYearsInfo.appendChild(li)
+        li.innerHTML='<b>'+yr+'</b>: <span style="color:orange">counting ...</span>'
+        li.id="liYear_"+yr
+        var url = sparcs.urls[yr].url
+        // https://dev.socrata.com/docs/queries/
+        // https://dev.socrata.com/docs/functions
+        pp.push(sparcs.getJSON(url+'?$select=hospital_county,%20count(*)&$group=hospital_county&$limit=10000')
+         .then(function(x){
+            sparcs.urls[yr].count=0
+            x.forEach(function(xi){
+                xi.hospital_county=xi.hospital_county||'NA'
+                sparcs.urls[yr].county[xi.hospital_county]={count:parseInt(xi.count)}
+                sparcs.urls[yr].count+=sparcs.urls[yr].county[xi.hospital_county].count
+                4
+
+            })
+            li.innerHTML='For <b style="color:blue">'+yr+'</b> found <b style="color:blue">'+sparcs.urls[yr].count.toLocaleString()+'</b> patient records in <b style="color:blue">'+Object.entries(sparcs.urls[yr].county).length+'</b> counties</span>'
+        }))
+    })
+    //console.log(pp)
+    return Promise.all(pp)
+}
+
+
+yourArray = []; obj = {};
+  for (var i = 0; i < xx.length; i++) {
+    for (var j = 0; j < xx[i].responseJSON.length; j++){
+		year = xx[i].responseJSON[j].year;
+		zipcode = xx[i].responseJSON[j].patient_zipcode
+		obj['year']['zipcode'] = 1;
+		yourArray.push(year);
+      }
+  }
+*/
+
+
+    
+    
+    
+
+
+
 
