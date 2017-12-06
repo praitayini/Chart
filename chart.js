@@ -1,4 +1,3 @@
-
 var response=
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json?$query=SELECT%20COUNT(*)')
     .then(function(x) {
@@ -30,9 +29,15 @@ while(current <= max ) {
     getResultFromPromise(promise)
     //getElement(xx)
     current += increment;
+
 } 
 
-  var grid = {}
+
+$(function(){
+ 
+
+$('#year').change(function () {
+  var grid = {};
   for(var i = 0; i < xx.length; i++){
     for (var j = 0; j < xx[i].responseJSON.length; j++) {
       year = xx[i].responseJSON[j].year;
@@ -47,44 +52,17 @@ while(current <= max ) {
   for(var i = 0; i < yrs.length; i++) {
     zips = Object.keys( grid[yrs[i]] );
     grid[yrs[i]] = zips;
-    } 
-    console.log(grid)
-
-
-
-jQuery(function($) {
-  var grid = {}
-  for(var i = 0; i < xx.length; i++){
-    for (var j = 0; j < xx[i].responseJSON.length; j++) {
-      year = xx[i].responseJSON[j].year;
-      zipcode = xx[i].responseJSON[j].patient_zipcode;
-      if( grid[year] )
-      grid[year][zipcode] = 1
-      else
-      grid[year] = { zipcode : 1 }
-      }
-  }
-  yrs=Object.keys(grid)
-  for(var i = 0; i < yrs.length; i++) {
-    zips = Object.keys( grid[yrs[i]] );
-    grid[yrs[i]] = zips;
-    } 
-    console.log(grid)
-    
-    var $locations = $('#location');
-    $('#year').change(function () {
-      var year = $(this).val().toString();
-      console.log(year);
-      console.log(grid);
-      lcns = grid[year] || [];
-      var html = $.map(lcns, function(lcn){
-        return '<option value="' + lcn + '">' + lcn + '</option>'
-        }).join('');
-        console.log(html)
-        $locations.html(html)
+  } 
+  //console.log(grid)
+  var locations = $('#location');
+  var year = $(this).val().toString();
+  var lcns = grid[year] || [];
+  var html = $.map(lcns, function(lcn){
+    return '<option value="' + lcn + '">' + lcn + '</option>'
+    }).join('');
+    locations.html(html)
     });
 });
-
 
 
 // A full setItem() call with Promises.
@@ -93,6 +71,7 @@ localforage.setItem('health', xx).then(function(xx) {
 }, function(error) {
   console.error(error);
 });
+
 
 /*
 jQuery.getJSON('https://health.data.ny.gov/resource/5q8c-d6xq.json')
